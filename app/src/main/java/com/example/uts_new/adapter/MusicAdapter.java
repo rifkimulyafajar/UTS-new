@@ -1,6 +1,7 @@
 package com.example.uts_new.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final DataMusic music = dataMusics.get(position);
 
         Picasso.get().load(music.getFotoAlbum()).into(holder.image_album);
@@ -47,6 +48,13 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "anda memilih " + music.getJudul() ,Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(context, PlayMusicActivity.class);
+
+                intent.putExtra("judul-key", music.getJudul());
+                intent.putExtra("album-key", music.getAlbum());
+                intent.putExtra("foto-key", music.getFotoAlbum());
+                context.startActivity(intent);
             }
         });
     }
