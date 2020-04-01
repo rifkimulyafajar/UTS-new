@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uts_new.R;
@@ -35,11 +37,18 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        DataMusic music = dataMusics.get(position);
+        final DataMusic music = dataMusics.get(position);
 
         Picasso.get().load(music.getFotoAlbum()).into(holder.image_album);
         holder.text_judul.setText(music.getJudul());
         holder.text_album.setText(music.getAlbum());
+
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "anda memilih " + music.getJudul() ,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -50,6 +59,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView text_judul, text_album;
         ImageView image_album;
+        ConstraintLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,6 +67,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
             text_judul = itemView.findViewById(R.id.textView_judul);
             text_album = itemView.findViewById(R.id.textView_album);
             image_album = itemView.findViewById(R.id.image_album);
+            layout = itemView.findViewById(R.id.parent_layout);
         }
     }
 }
